@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Build responsive WebP/AVIF derivatives from masters.
+#
+# Usage: bin/images <master> <base-name> [--square]
+#   master     path to a 2000px+ JPEG/PNG master
+#   base-name  output base, e.g. nara-1  -> assets/img/produk/nara-1-640.webp
+#
+# Masters stay in Drive; only derivatives are committed.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+master="${1:?master image required}"
+base="${2:?base name required}"
+outdir="${3:-assets/img/produk}"
+mkdir -p "$outdir"
+
+for w in 640 1280 1920; do
+  magick "$master" -auto-orient -resize "${w}x>" -quality 82 "$outdir/${base}-${w}.webp"
+  magick "$master" -auto-orient -resize "${w}x>" -quality 55 "$outdir/${base}-${w}.avif"
+done
+
+printf 'Wrote %s/%s-{640,1280,1920}.{webp,avif}\n' "$outdir" "$base"

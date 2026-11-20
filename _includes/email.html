@@ -1,0 +1,2 @@
+{%- assign e = site.data.site.contact.email -%}
+<a href="mailto:{{ e | replace: '@', '&#64;' | replace: '.', '&#46;' }}">{{ e | replace: '@', '&#64;' | replace: '.', '&#46;' }}</a>

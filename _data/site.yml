@@ -1,0 +1,34 @@
+brand: Maurubiya
+tagline: Pakaian sehari yang rapi
+
+nav:
+  - label: Beranda
+    url: /
+  - label: Produk
+    url: /produk/
+  - label: Tentang
+    url: /tentang/
+  - label: Kontak
+    url: /kontak/
+
+contact:
+  # Ganti dengan nomor WhatsApp asli sebelum publikasi.
+  whatsapp: "6281234567890"
+  email: halo@maurubiya.id
+  city: Bandung, Jawa Barat
+
+social:
+  instagram: ""
+  tiktok: ""
+
+analytics:
+  # Isi dengan ID GA4 (G-XXXXXXXXXX) saat siap.
+  ga_id: ""
+
+# Isi bagian ini hanya bila Maurubiya berada di bawah PT Babybelanja
+# Berkah Bersama. Bila kosong, footer dan JSON-LD tidak menampilkannya.
+umbrella:
+  name: ""
+  url: ""
+  city: Bandung
+  region: Jawa Barat

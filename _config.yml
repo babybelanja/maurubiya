@@ -1,0 +1,73 @@
+# Site
+title: Maurubiya
+tagline: Pakaian sehari yang rapi
+description: >-
+  Maurubiya membuat pakaian sehari dengan potongan rapi dan bahan yang nyaman,
+  untuk dipakai berulang.
+url: "https://maurubiya.id"
+baseurl: ""
+lang: id
+
+# Verifikasi Search Console. Isi lalu hapus tanda komentar saat siap.
+# webmaster_verifications:
+#   google: ""
+
+# Build
+markdown: kramdown
+permalink: pretty
+timezone: Asia/Jakarta
+
+collections:
+  products:
+    output: true
+    permalink: /produk/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "products"
+    values:
+      layout: "product"
+      seo:
+        type: "ItemPage"
+      image:
+        path: /assets/img/og-image.jpg
+        alt: "Maurubiya — pakaian sehari yang rapi"
+        width: 1200
+        height: 630
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+      image:
+        path: /assets/img/og-image.jpg
+        alt: "Maurubiya — pakaian sehari yang rapi"
+        width: 1200
+        height: 630
+
+# Sass
+sass:
+  style: compressed
+  sass_dir: _sass
+  sourcemap: never
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-minifier
+
+jekyll-minifier:
+  remove_comments: true
+  compress_css: true
+  compress_javascript: true
+
+exclude:
+  - README.md
+  - AGENTS.md
+  - Gemfile
+  - Gemfile.lock
+  - bin
+  - vendor
+  - opencode.json

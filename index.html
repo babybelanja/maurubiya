@@ -1,0 +1,96 @@
+---
+layout: default
+description: "Maurubiya membuat pakaian sehari dengan potongan rapi dan bahan yang nyaman. Lihat koleksi atasan, bawahan, set, dan outer."
+hero_image: /assets/img/hero.svg
+---
+
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="label">Koleksi sehari</p>
+      <h1 class="display">Pakaian yang rapi, untuk hari yang panjang.</h1>
+      <p class="lead">Potongan lurus, bahan yang nyaman, dan warna yang mudah dipadukan. Dibuat untuk dipakai berulang, bukan disimpan.</p>
+      <div class="hero__cta">
+        <a class="btn" href="{{ '/produk/' | relative_url }}">Lihat produk</a>
+        <a class="btn btn--ghost" href="{{ '/kontak/' | relative_url }}">Tanya via WhatsApp</a>
+      </div>
+    </div>
+    <figure class="hero__media">
+      {% include image.html src="/assets/img/hero.svg" alt="Susunan kain netral dalam cahaya lembut" width=1600 height=1200 sizes="(min-width: 56rem) 48vw, 100vw" eager=true %}
+    </figure>
+  </div>
+</section>
+
+<section class="cats" aria-label="Kategori">
+  <div class="wrap cats__inner">
+    <p class="label">Kategori</p>
+    <ul>
+      {%- for cat in site.data.categories %}
+      {%- assign items = site.products | where: "category", cat.slug %}
+      <li>
+        <a href="{{ '/produk/' | relative_url }}?kategori={{ cat.slug }}">
+          <span>{{ cat.label }}</span>
+          <span class="muted">{{ items | size }}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="label">Pilihan</p>
+        <h2>Beberapa yang sering dipakai</h2>
+      </div>
+      <a class="link-arrow" href="{{ '/produk/' | relative_url }}">Semua produk <span aria-hidden="true">→</span></a>
+    </div>
+
+    <ul class="product-grid">
+      {%- assign featured = site.products | where: "featured", true | sort: "order" %}
+      {%- for product in featured limit: 4 %}
+      {% include product-card.html product=product %}
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="values">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="label">Kenapa Maurubiya</p>
+        <h2>Tiga hal yang kami jaga</h2>
+      </div>
+    </div>
+    <div class="values__grid">
+      <div class="value">
+        <h3>Mudah dipadukan</h3>
+        <p>Warna netral yang bertemu dengan isi lemari yang sudah ada.</p>
+      </div>
+      <div class="value">
+        <h3>Nyaman dipakai</h3>
+        <p>Bahan yang tidak menerawang dan jatuh dengan tenang di badan.</p>
+      </div>
+      <div class="value">
+        <h3>Dirawat dengan mudah</h3>
+        <p>Cuci dingin, jemur di tempat teduh, setrika pada suhu sedang.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <p class="label">Bantuan</p>
+        <h2>Butuh bantuan memilih?</h2>
+        <p>Kami bisa membantu menentukan ukuran dan warna melalui WhatsApp.</p>
+      </div>
+      <a class="btn btn--light" href="{{ '/kontak/' | relative_url }}">Hubungi kami</a>
+    </div>
+  </div>
+</section>

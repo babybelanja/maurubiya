@@ -1,0 +1,36 @@
+{%- assign _um = site.data.site.umbrella -%}
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <p class="site-footer__wordmark">{{ site.title }}</p>
+        <p class="muted">{{ site.tagline }}.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer">
+        {%- for item in site.data.site.nav %}
+        <a href="{{ item.url | relative_url }}">{{ item.label }}</a>
+        {%- endfor %}
+        {%- if site.data.site.social.instagram and site.data.site.social.instagram != "" %}
+        <a href="{{ site.data.site.social.instagram }}" target="_blank" rel="noopener">Instagram</a>
+        {%- endif %}
+        {%- if site.data.site.social.tiktok and site.data.site.social.tiktok != "" %}
+        <a href="{{ site.data.site.social.tiktok }}" target="_blank" rel="noopener">TikTok</a>
+        {%- endif %}
+      </nav>
+
+      <div class="site-footer__meta">
+        <p class="label">Kontak</p>
+        <p>{% include email.html %}</p>
+        <p class="muted">{{ site.data.site.contact.city }}</p>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="muted">
+        &copy; <span id="year"></span> {{ site.title }}{% if _um.name and _um.name != "" %}. Bagian dari
+        <a href="{{ _um.url }}" target="_blank" rel="noopener">{{ _um.name }}</a>{% endif %}.
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<article class="page">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="{{ '/' | relative_url }}">Beranda</a></li>
+          <li aria-current="page">{{ page.title }}</li>
+        </ol>
+      </nav>
+      <p class="label">{{ page.kicker | default: "Maurubiya" }}</p>
+      <h1>{{ page.title }}</h1>
+      {%- if page.lead %}
+      <p class="lead">{{ page.lead }}</p>
+      {%- endif %}
+    </div>
+  </header>
+
+  <div class="wrap prose">
+    {{ content }}
+  </div>
+</article>

@@ -1,0 +1,108 @@
+---
+layout: default
+---
+
+{%- assign cat = site.data.categories | where: "slug", page.category | first -%}
+{%- assign wa = site.data.site.contact.whatsapp -%}
+
+<article class="product">
+  <div class="wrap">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="{{ '/' | relative_url }}">Beranda</a></li>
+        <li><a href="{{ '/produk/' | relative_url }}">Produk</a></li>
+        <li aria-current="page">{{ page.title }}</li>
+      </ol>
+    </nav>
+
+    <div class="product__grid">
+      <figure class="product__media">
+        {% include image.html src=page.photo alt=page.image_alt width=1000 height=1250 sizes="(min-width: 56rem) 46vw, 100vw" eager=true %}
+      </figure>
+
+      <div class="product__info">
+        <p class="label">{{ cat.label | default: "Produk" }}</p>
+        <h1 class="product__title">{{ page.title }}</h1>
+        <p class="lead">{{ page.summary }}</p>
+
+        {%- if page.colors %}
+        <div class="product__block">
+          <p class="label">Warna</p>
+          <ul class="swatches">
+            {%- for color in page.colors %}
+            <li><span class="swatch" style="--swatch: {{ color.hex }}" aria-hidden="true"></span>{{ color.name }}</li>
+            {%- endfor %}
+          </ul>
+        </div>
+        {%- endif %}
+
+        {%- if page.details %}
+        <div class="product__block">
+          <p class="label">Detail</p>
+          <dl class="specs">
+            {%- for item in page.details %}
+            <div>
+              <dt>{{ item.label }}</dt>
+              <dd>{{ item.value }}</dd>
+            </div>
+            {%- endfor %}
+          </dl>
+        </div>
+        {%- endif %}
+
+        <div class="prose product__desc">
+          {{ content }}
+        </div>
+
+        <div class="product__cta">
+          {%- if wa and wa != "" %}
+          <a class="btn" href="https://wa.me/{{ wa }}?text={{ 'Halo, saya ingin bertanya tentang ' | append: page.title | url_encode }}" target="_blank" rel="noopener">Tanya via WhatsApp</a>
+          {%- else %}
+          <a class="btn" href="{{ '/kontak/' | relative_url }}">Hubungi kami</a>
+          {%- endif %}
+          <a class="btn btn--ghost" href="{{ '/produk/' | relative_url }}">Semua produk</a>
+        </div>
+        <p class="product__note">Harga dan ketersediaan dikonfirmasi melalui WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+
+  {%- assign related_count = 0 -%}
+  {%- capture related_html -%}
+    {%- for item in site.products -%}
+      {%- if item.category == page.category and item.url != page.url and related_count < 3 -%}
+        {% include product-card.html product=item %}
+        {%- assign related_count = related_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if related_count > 0 %}
+  <section class="related">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="label">Lainnya</p>
+          <h2>Dari kategori {{ cat.label }}</h2>
+        </div>
+      </div>
+      <ul class="product-grid">
+        {{ related_html }}
+      </ul>
+    </div>
+  </section>
+  {%- endif %}
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.summary | jsonify }},
+  "image": {{ page.photo | absolute_url | jsonify }},
+  "category": {{ cat.label | default: page.category | jsonify }},
+  "brand": { "@type": "Brand", "name": {{ site.title | jsonify }} },
+  "color": {{ page.colors | map: "name" | join: ", " | jsonify }},
+  "url": {{ page.url | absolute_url | jsonify }}
+}
+</script>

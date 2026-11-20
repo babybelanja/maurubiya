@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" role="img">
+  <rect width="1000" height="1250" fill="#d6d2cb"/>
+  <path d="M500 260c90 0 160 60 160 150v430c0 60-50 110-110 110H450c-60 0-110-50-110-110V410c0-90 70-150 160-150z" fill="#bcb7ad" opacity="0.78"/>
+  <rect x="330" y="390" width="340" height="500" rx="40" fill="none" stroke="#bcb7ad" stroke-width="8" opacity="0.9"/>
+  <text x="80" y="1150" font-family="system-ui, sans-serif" font-size="34" letter-spacing="8" fill="#4b4841" opacity="0.75">BIMA</text>
+</svg>

@@ -1,0 +1,16 @@
+{%- assign src = include.src | relative_url -%}
+{%- assign ext = include.src | split: '.' | last | downcase -%}
+{%- assign sizes = include.sizes | default: '100vw' -%}
+{%- assign cls = include.class | default: '' -%}
+{%- if ext == 'svg' -%}
+<img src="{{ src }}" alt="{{ include.alt }}" width="{{ include.width }}" height="{{ include.height }}"{% if cls != '' %} class="{{ cls }}"{% endif %} {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+{%- else -%}
+{%- assign parts = include.src | split: '/' -%}
+{%- assign file = parts | last -%}
+{%- assign name = file | split: '.' | first -%}
+{%- assign dir = include.src | remove: file -%}
+<picture>
+  <source type="image/avif" srcset="{{ dir }}{{ name }}-640.avif 640w, {{ dir }}{{ name }}-1280.avif 1280w, {{ dir }}{{ name }}-1920.avif 1920w" sizes="{{ sizes }}" />
+  <img src="{{ src }}" srcset="{{ dir }}{{ name }}-640.webp 640w, {{ dir }}{{ name }}-1280.webp 1280w, {{ dir }}{{ name }}-1920.webp 1920w" sizes="{{ sizes }}" alt="{{ include.alt }}" width="{{ include.width }}" height="{{ include.height }}"{% if cls != '' %} class="{{ cls }}"{% endif %} {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async" />
+</picture>
+{%- endif -%}

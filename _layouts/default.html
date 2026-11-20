@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'id' }}">
+{% include head.html %}
+<body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
+  <a class="skip" href="#konten">Lewati ke konten</a>
+  {% include header.html %}
+
+  <main id="konten">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+  {% include analytics.html %}
+
+  <script>
+    (function () {
+      var year = document.getElementById('year');
+      if (year) { year.textContent = new Date().getFullYear(); }
+
+      var toggle = document.getElementById('navToggle');
+      var links = document.getElementById('navLinks');
+      if (toggle && links) {
+        toggle.addEventListener('click', function () {
+          var open = links.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+
+      var filters = document.getElementById('catalogFilter');
+      if (filters) {
+        var cards = Array.prototype.slice.call(document.querySelectorAll('[data-category]'));
+        var empty = document.getElementById('catalogEmpty');
+        filters.addEventListener('click', function (event) {
+          var button = event.target.closest('[data-filter]');
+          if (!button) { return; }
+          var value = button.getAttribute('data-filter');
+          filters.querySelectorAll('[data-filter]').forEach(function (item) {
+            item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+          });
+          var any = false;
+          cards.forEach(function (card) {
+            var show = value === 'all' || card.getAttribute('data-category') === value;
+            card.hidden = !show;
+            if (show) { any = true; }
+          });
+          if (empty) { empty.hidden = any; }
+        });
+
+        var initial = new URLSearchParams(window.location.search).get('kategori');
+        if (initial) {
+          var match = filters.querySelector('[data-filter="' + initial + '"]');
+          if (match) { match.click(); }
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

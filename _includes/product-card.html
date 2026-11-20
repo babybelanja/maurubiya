@@ -1,0 +1,12 @@
+{%- assign cat = site.data.categories | where: "slug", include.product.category | first -%}
+<li class="card" data-category="{{ include.product.category }}">
+  <a class="card__link" href="{{ include.product.url | relative_url }}">
+    <span class="card__media">
+      {% include image.html src=include.product.photo alt=include.product.image_alt width=800 height=1000 sizes="(min-width: 68rem) 22vw, (min-width: 48rem) 30vw, 45vw" %}
+    </span>
+    <span class="card__body">
+      <span class="card__name">{{ include.product.title }}</span>
+      <span class="card__meta">{{ cat.label | default: include.product.category }} · {{ include.product.colors | size }} warna</span>
+    </span>
+  </a>
+</li>

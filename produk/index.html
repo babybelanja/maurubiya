@@ -1,0 +1,31 @@
+---
+layout: default
+title: Produk
+description: "Semua produk Maurubiya: atasan, bawahan, set, dan outer dengan warna netral yang mudah dipadukan untuk dipakai sehari-hari."
+---
+
+<section class="catalog">
+  <div class="wrap">
+    <header class="page-head page-head--flush">
+      <p class="label">Katalog</p>
+      <h1>Produk</h1>
+      <p class="lead">Pilih berdasarkan kategori. Setiap produk tersedia dalam beberapa warna.</p>
+    </header>
+
+    <div class="filters" id="catalogFilter" role="group" aria-label="Filter kategori">
+      <button type="button" class="chip" data-filter="all" aria-pressed="true">Semua</button>
+      {%- for cat in site.data.categories %}
+      <button type="button" class="chip" data-filter="{{ cat.slug }}" aria-pressed="false">{{ cat.label }}</button>
+      {%- endfor %}
+    </div>
+
+    <ul class="product-grid">
+      {%- assign items = site.products | sort: "order" %}
+      {%- for product in items %}
+      {% include product-card.html product=product %}
+      {%- endfor %}
+    </ul>
+
+    <p id="catalogEmpty" class="muted" hidden>Tidak ada produk di kategori ini.</p>
+  </div>
+</section>
