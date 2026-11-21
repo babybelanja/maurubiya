@@ -6,7 +6,7 @@
     </span>
     <span class="card__body">
       <span class="card__name">{{ include.product.title }}</span>
-      <span class="card__meta">{{ cat.label | default: include.product.category }} · {{ include.product.colors | size }} warna</span>
+      <span class="card__meta">{{ cat.label | default: include.product.category }}{% assign color_count = include.product.colors | size %}{% if color_count > 1 %} · {{ color_count }} warna{% elsif color_count == 1 %}{% unless include.product.title contains include.product.colors.first.name %} · {{ include.product.colors.first.name }}{% endunless %}{% endif %}</span>
     </span>
   </a>
 </li>

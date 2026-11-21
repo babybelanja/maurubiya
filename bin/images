@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 # Build responsive WebP/AVIF derivatives from masters.
 #
-# Usage: bin/images <master> <base-name> [--square]
-#   master     path to a 2000px+ JPEG/PNG master
-#   base-name  output base, e.g. nara-1  -> assets/img/produk/nara-1-640.webp
+# Usage: bin/images <master> <base-name> [outdir]
+#   master     path to a 2400px-wide master, e.g. ~/Downloads/maurubiya/upscaled/foo-2400w.webp
+#   base-name  output base, e.g. mukena-navy-1 -> assets/img/produk/mukena-navy-1-640.webp
 #
-# Masters stay in Drive; only derivatives are committed.
+# Masters stay in Drive / ~/Downloads; only derivatives are committed.
+#
+# Tiers are 640/1280/1600, not 640/1280/1920: the masters here (4x upscale of
+# 1080px sources) cannot reach 1920 at a usable quality inside the ~200 KB
+# derivative budget in AGENTS.md. 1600w@q74 peaks at 191 KB; 1920w@q62 still
+# lands at 203 KB. See the commit that introduced this ladder for measurements.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -14,9 +19,16 @@ base="${2:?base name required}"
 outdir="${3:-assets/img/produk}"
 mkdir -p "$outdir"
 
-for w in 640 1280 1920; do
-  magick "$master" -auto-orient -resize "${w}x>" -quality 82 "$outdir/${base}-${w}.webp"
-  magick "$master" -auto-orient -resize "${w}x>" -quality 55 "$outdir/${base}-${w}.avif"
+# width:webp-quality:avif-quality
+for ladder in 640:82:58 1280:80:52 1600:74:48; do
+  width="${ladder%%:*}"
+  rest="${ladder#*:}"
+  wq="${rest%%:*}"
+  aq="${rest##*:}"
+  magick "$master" -auto-orient -resize "${width}x>" -quality "$wq" \
+    -define webp:method=6 "$outdir/${base}-${width}.webp"
+  magick "$master" -auto-orient -resize "${width}x>" -quality "$aq" \
+    "$outdir/${base}-${width}.avif"
 done
 
-printf 'Wrote %s/%s-{640,1280,1920}.{webp,avif}\n' "$outdir" "$base"
+printf 'Wrote %s/%s-{640,1280,1600}.{webp,avif}\n' "$outdir" "$base"

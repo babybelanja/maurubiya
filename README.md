@@ -24,16 +24,36 @@ _layouts/product.html     # detail produk + JSON-LD Product
 _sass/                    # tokens, base, type, components
 assets/css/main.scss      # @use seluruh partial
 assets/fonts/             # Plus Jakarta Sans (woff2)
-assets/img/               # hero, logo, og-image, placeholder produk
+assets/img/               # hero mukena, logo, og-image, turunan produk
 index.html                # beranda
 produk/index.html         # katalog + filter kategori
 tentang.md                # /tentang/
 kontak.md                 # /kontak/
 404.html
-bin/images                # pipeline master → WebP/AVIF 3 lebar
-bin/make-placeholders.sh  # regenerate placeholder SVG
+bin/images                # pipeline master → WebP/AVIF 640/1280/1600
 AGENTS.md                 # aturan SEO + Lighthouse
 ```
+
+## Komponen beranda
+
+Hero adalah crossfade carousel berisi enam warna mukena, ditampilkan **utuh**
+(`object-fit: contain`) di kolom kanan selebar 48% dengan tinggi band
+`clamp(28rem, 85svh, 54rem)`. Teks duduk di kolom kiri pada latar krem, jadi
+tidak perlu scrim dan tidak ada teks di atas foto.
+
+Latar band mengikuti foto yang sedang tampil: elemen `[data-hero-backdrop]`
+memakai gambar aktif sebagai backdrop blur (`filter: blur(22px)`), lalu ditutup
+veil krem bergradasi sebelum kolom foto. Teks tetap tinta di atas bidang terang,
+jadi kontras tidak bergantung pada warna yang kebetulan tampil — diukur 10:1
+sampai 14:1 untuk navy, teracota, dan hitam. Tepi kiri kolom foto di-feather
+dengan `mask-image` supaya tidak ada garis vertikal keras.
+
+Di bawah 56rem kolom menumpuk: foto 4:5 selebar layar (tanpa crop) lalu teks di
+bawahnya; backdrop dan veil disembunyikan. Hanya slide pertama yang dimuat saat halaman dibuka; slide lain
+disimpan di `<template>` dan baru dipasang saat dibutuhkan. Tanpa JavaScript
+hanya slide pertama yang tampil dan tombol titik disembunyikan. Perpindahan
+slide menunggu gambarnya selesai di-decode, jadi band tidak pernah berkedip
+kosong. Auto-advance dimatikan saat `prefers-reduced-motion: reduce`.
 
 ## Menjalankan lokal
 
@@ -48,23 +68,56 @@ bundle exec jekyll serve --livereload
 Google Drive hanya menjadi **sumber/referensi**, bukan host gambar. Alurnya:
 
 1. Tarik folder Drive secara lokal (`gdown --folder <url>` atau `rclone`).
-2. Hasilkan turunan web dengan `bin/images`:
+2. Upscale master 4x dengan Real-ESRGAN, lalu simpan sebagai WebP 2400 px:
 
    ```sh
-   bin/images ~/Downloads/maurubiya/nara.jpg nara
+   upscayl-bin -i sumber.jpg -o /tmp/4x.png -s 4 \
+     -n upscayl-standard-4x -m /Applications/Upscayl.app/Contents/Resources/models
+   magick /tmp/4x.png -auto-orient -resize "2400x3000>" -quality 88 \
+     ~/Downloads/maurubiya/upscaled/nama-2400w.webp
    ```
 
-   Menghasilkan `assets/img/produk/nara-{640,1280,1920}.{webp,avif}`.
-3. Commit hanya turunan web. Master tetap di Drive.
-4. Ganti `image:` di front matter produk (mis. `/assets/img/produk/nara-1280.webp`).
-   `_includes/image.html` otomatis membuat `<picture>` + `srcset`.
+   Foto sumber dari Drive umumnya sudah 1080×1350; tanpa langkah ini tidak ada
+   bahan nyata untuk lebar 1280/1600.
+3. Hasilkan turunan web dengan `bin/images`:
 
-Saat ini semua produk memakai placeholder SVG (`bin/make-placeholders.sh`).
+   ```sh
+   bin/images ~/Downloads/maurubiya/upscaled/nama-2400w.webp nama
+   ```
+
+   Menghasilkan `assets/img/produk/nama-{640,1280,1600}.{webp,avif}`. Lebar
+   1920 sengaja tidak dipakai: master hasil upscale tidak bisa mencapainya di
+   bawah batas ~200 KB per turunan (1920 q62 pun masih 203 KB).
+4. Commit hanya turunan web. Master tetap di Drive / `~/Downloads`.
+5. Setel `photo:` di front matter produk ke turunan 1280, mis.
+   `/assets/img/produk/nama-1280.webp`; `_includes/image.html` menurunkan
+   `srcset` 640/1280/1600 dari nama itu. Foto kedua memakai `gallery:`:
+
+   ```yaml
+   photo: /assets/img/produk/nama-1-1280.webp
+   gallery:
+     - photo: /assets/img/produk/nama-2-1280.webp
+       alt: "Deskripsi foto kedua"
+   ```
+
+Katalog saat ini hanya berisi seri mukena Zeya; seluruh foto berasal dari folder
+Drive yang sama. Tidak ada produk contoh atau gambar placeholder.
+
+> Data yang belum dikonfirmasi untuk seri mukena: bahan, ukuran, dan berat.
+> Jangan diisi sebelum ada sumbernya — lihat `AGENTS.md` §3.
+
 
 ## Deploy
 
-Push ke `main` memicu build `JEKYLL_ENV=production` lalu menerbitkan ke GitHub
-Pages. Setel Pages **Source** ke **GitHub Actions**.
+Repo: `git@github.com:babybelanja/maurubiya.git`.
+
+Deploy otomatis belum aktif: trigger `push` di `.github/workflows/pages.yml`
+sengaja dikomentari karena `maurubiya.id` belum dibeli dan Pages belum
+diaktifkan. Setelah domain menunjuk ke GitHub Pages:
+
+1. Setel Pages **Source** ke **GitHub Actions**.
+2. Buka komentar `push: branches: [main]` di workflow.
+3. Push ke `main` (atau jalankan workflow manual).
 
 ## Verifikasi Lighthouse
 

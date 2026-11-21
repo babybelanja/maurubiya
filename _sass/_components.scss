@@ -121,40 +121,186 @@
 }
 
 // ── Hero ─────────────────────────────────────────────────────
+// Hero: full-height band. Photo is contained on the right (never cropped, so
+// the whole mukena shows), copy sits on the cream field at left. On narrow
+// screens the photo stacks above the copy, which is why no scrim is needed.
 .hero {
-  padding-block: clamp(1.5rem, 4vw, 3rem);
   border-bottom: 1px solid var(--rule);
+  background: var(--bg-soft);
 }
 
-.hero__grid {
+.hero__band {
+  position: relative;
   display: grid;
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
 }
 
 @media (min-width: 56rem) {
-  .hero__grid { grid-template-columns: 1.05fr 0.95fr; }
+  .hero__band {
+    // Right column hugs the photo: its width is the band height × 4/5, so a
+    // contained 4:5 photo fills the column exactly — no gap, no crop.
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: clamp(28rem, 85svh, 54rem);
+  }
 }
 
-.hero__copy .display {
-  max-width: 16ch;
-  margin-top: 0.25rem;
+// Ambient backdrop: the active photo, blurred and scaled, so the band takes on
+// that colourway's light instead of a fixed cream field.
+.hero__backdrop {
+  display: none;
+}
+
+@media (min-width: 56rem) {
+  .hero__backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-position: center;
+    background-size: cover;
+    filter: blur(22px) saturate(1.12);
+    transform: scale(1.2);
+  }
+}
+
+// Veil sits above the backdrop but below the photograph, so the copy always has
+// a light field to sit on while the photo itself stays untouched.
+.hero__veil {
+  display: none;
+}
+
+@media (min-width: 56rem) {
+  .hero__veil {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      rgba(246, 244, 239, 0.8) 0%,
+      rgba(246, 244, 239, 0.66) 40%,
+      rgba(246, 244, 239, 0.44) 55%,
+      rgba(246, 244, 239, 0) 64%
+    );
+  }
+}
+
+.hero__slides {
+  position: relative;
+  z-index: 2;
+  order: -1;
+  aspect-ratio: 4 / 5;
+  background: var(--bg-soft);
+}
+
+@media (min-width: 56rem) {
+  .hero__slides {
+    // Photo column second, so the copy lands on the left.
+    order: 2;
+    aspect-ratio: auto;
+    background: none;
+    width: calc(clamp(28rem, 85svh, 54rem) * 0.8);
+    // Feather the photo's left edge into the blurred backdrop. The ramp has an
+    // intermediate stop so the dissolve reads as a gradient, not a straight
+    // alpha ramp ending on a visible line.
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.28) 5%,
+      rgba(0, 0, 0, 0.72) 11%,
+      #000 18%
+    );
+  }
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s $ease;
+
+  &.is-active { opacity: 1; }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: right center;
+    display: block;
+  }
+}
+
+.hero__overlay {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(2rem, 6vw, 4rem);
+  padding-inline: max(#{$gutter}, calc((100vw - #{$maxw}) / 2)) #{$gutter};
+}
+
+.hero__title {
+  max-width: 22ch;
+  margin-top: 0.35rem;
+  font-size: clamp(2rem, 1.2rem + 2.2vw, 3.25rem);
+}
+
+.hero__lead {
+  max-width: 42ch;
+  margin-top: 1rem;
 }
 
 .hero__cta {
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
-  margin-top: 2rem;
+  margin-top: 1.75rem;
 }
 
-.hero__media {
-  margin: 0;
-  overflow: hidden;
-  background: var(--bg-soft);
-  border-radius: $radius;
+.hero__dots-wrap {
+  display: flex;
+  justify-content: center;
+  padding-block: 0.25rem;
+}
 
-  img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.hero__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.hero__dot {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rule);
+    transition: background 0.3s $ease;
+  }
+
+  &[aria-current="true"]::before { background: var(--ink); }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -6px;
+    border-radius: $radius;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__slide,
+  .hero__dot::before { transition: none; }
 }
 
 // ── Category strip ───────────────────────────────────────────
@@ -379,6 +525,11 @@
 
 @media (min-width: 56rem) {
   .product__grid { grid-template-columns: 1.05fr 0.95fr; }
+}
+
+.product__gallery {
+  display: grid;
+  gap: 0.75rem;
 }
 
 .product__media {

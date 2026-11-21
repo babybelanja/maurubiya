@@ -26,6 +26,116 @@
         });
       }
 
+      // Hero carousel: crossfade, plus dot buttons. Without JS only the first
+      // slide is visible and the dots stay hidden, so the hero still reads fine.
+      var carousel = document.querySelector('[data-hero-carousel]');
+      var slides = carousel ? carousel.querySelectorAll('.hero__slide') : [];
+      var dots = document.querySelector('[data-hero-dots]');
+      var backdrop = document.querySelector('[data-hero-backdrop]');
+      if (slides.length > 1) {
+        var current = 0;
+        var timer = null;
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+        var buttons = [];
+
+        // Mirror the active photo into the blurred backdrop. The image is
+        // already in the cache, so this costs no extra request.
+        function paintBackdrop() {
+          if (!backdrop) { return; }
+          var img = slides[current] ? slides[current].querySelector('img') : null;
+          if (!img) { return; }
+          var src = img.currentSrc || img.src;
+          if (src) { backdrop.style.backgroundImage = 'url("' + src + '")'; }
+        }
+
+        function paintDots() {
+          buttons.forEach(function (button, index) {
+            button.setAttribute('aria-current', index === current ? 'true' : 'false');
+          });
+        }
+
+        function materialize(index) {
+          var slide = slides[index];
+          if (!slide || slide.querySelector('picture')) { return; }
+          var template = slide.querySelector('template');
+          if (template) {
+            slide.appendChild(template.content.cloneNode(true));
+            slide.removeChild(template);
+          }
+        }
+
+        function show(next) {
+          next = (next + slides.length) % slides.length;
+          if (next === current) { return; }
+          materialize(next);
+
+          var swap = function () {
+            slides[current].classList.remove('is-active');
+            slides[current].setAttribute('aria-hidden', 'true');
+            current = next;
+            slides[current].classList.add('is-active');
+            slides[current].removeAttribute('aria-hidden');
+            paintDots();
+            paintBackdrop();
+          };
+
+          // Never crossfade to an image that has not decoded yet: the band would
+          // flash empty. Swap immediately if it is ready, otherwise wait.
+          var img = slides[next].querySelector('img');
+          if (!img || img.complete) { swap(); return; }
+
+          var done = function () {
+            img.removeEventListener('load', done);
+            img.removeEventListener('error', done);
+            if (current !== next) { swap(); }
+          };
+          img.addEventListener('load', done);
+          img.addEventListener('error', done);
+        }
+
+        function stop() { clearInterval(timer); timer = null; }
+        function start() {
+          if (timer || reduced.matches) { return; }
+          timer = setInterval(function () { show(current + 1); }, 6000);
+        }
+        function restart() { stop(); start(); }
+
+        if (dots) {
+          for (var i = 0; i < slides.length; i++) {
+            (function (index) {
+              var button = document.createElement('button');
+              button.type = 'button';
+              button.className = 'hero__dot';
+              button.setAttribute('aria-label', 'Tampilkan foto ' + (index + 1) + ' dari ' + slides.length);
+              button.addEventListener('click', function () { show(index); restart(); });
+              dots.appendChild(button);
+              buttons.push(button);
+            })(i);
+          }
+          dots.hidden = false;
+          paintDots();
+        }
+
+        carousel.addEventListener('mouseenter', stop);
+        carousel.addEventListener('mouseleave', start);
+        carousel.addEventListener('focusin', stop);
+        carousel.addEventListener('focusout', start);
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) { stop(); } else { start(); }
+        });
+        paintBackdrop();
+        start();
+
+        // Warm the next slide after the page is idle, so the first crossfade
+        // has its image ready without competing with the LCP image.
+        var warm = function () { materialize((current + 1) % slides.length); };
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(warm, { timeout: 3000 });
+        } else {
+          setTimeout(warm, 1500);
+        }
+      }
+
       var filters = document.getElementById('catalogFilter');
       if (filters) {
         var cards = Array.prototype.slice.call(document.querySelectorAll('[data-category]'));

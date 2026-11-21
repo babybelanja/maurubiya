@@ -16,9 +16,16 @@ layout: default
     </nav>
 
     <div class="product__grid">
-      <figure class="product__media">
-        {% include image.html src=page.photo alt=page.image_alt width=1000 height=1250 sizes="(min-width: 56rem) 46vw, 100vw" eager=true %}
-      </figure>
+      <div class="product__gallery">
+        <figure class="product__media">
+          {% include image.html src=page.photo alt=page.image_alt width=1000 height=1250 sizes="(min-width: 56rem) 46vw, 100vw" eager=true %}
+        </figure>
+        {%- for shot in page.gallery %}
+        <figure class="product__media">
+          {% include image.html src=shot.photo alt=shot.alt width=1000 height=1250 sizes="(min-width: 56rem) 46vw, 100vw" %}
+        </figure>
+        {%- endfor %}
+      </div>
 
       <div class="product__info">
         <p class="label">{{ cat.label | default: "Produk" }}</p>

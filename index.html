@@ -1,26 +1,57 @@
 ---
 layout: default
-description: "Maurubiya membuat pakaian sehari dengan potongan rapi dan bahan yang nyaman. Lihat koleksi atasan, bawahan, set, dan outer."
-hero_image: /assets/img/hero.svg
+description: "Mukena travel Maurubiya seri Zeya: khimar dan rok panjang dalam enam warna, dilengkapi tas serut kain untuk dibawa bepergian."
+hero_image: /assets/img/produk/mukena-navy-1-1280.webp
+hero_slides:
+  - src: /assets/img/produk/mukena-navy-1-1280.webp
+    alt: "Mukena Zeya warna navy"
+  - src: /assets/img/produk/mukena-biru-1-1280.webp
+    alt: "Mukena Zeya warna biru"
+  - src: /assets/img/produk/mukena-coklat-tua-1-1280.webp
+    alt: "Mukena Zeya warna coklat tua"
+  - src: /assets/img/produk/mukena-teracota-1-1280.webp
+    alt: "Mukena Zeya warna teracota"
+  - src: /assets/img/produk/mukena-marun-1-1280.webp
+    alt: "Mukena Zeya warna marun"
+  - src: /assets/img/produk/mukena-hitam-1-1280.webp
+    alt: "Mukena Zeya warna hitam"
 ---
 
 <section class="hero">
-  <div class="wrap hero__grid">
-    <div class="hero__copy">
-      <p class="label">Koleksi sehari</p>
-      <h1 class="display">Pakaian yang rapi, untuk hari yang panjang.</h1>
-      <p class="lead">Potongan lurus, bahan yang nyaman, dan warna yang mudah dipadukan. Dibuat untuk dipakai berulang, bukan disimpan.</p>
-      <div class="hero__cta">
-        <a class="btn" href="{{ '/produk/' | relative_url }}">Lihat produk</a>
-        <a class="btn btn--ghost" href="{{ '/kontak/' | relative_url }}">Tanya via WhatsApp</a>
+  <div class="hero__band">
+    <div class="hero__backdrop" data-hero-backdrop aria-hidden="true"></div>
+    <div class="hero__veil" aria-hidden="true"></div>
+    <div class="hero__slides" data-hero-carousel aria-roledescription="carousel" aria-label="Foto mukena Zeya">
+      {%- for slide in page.hero_slides %}
+      <div class="hero__slide{% if forloop.first %} is-active{% endif %}" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} dari {{ page.hero_slides | size }}"{% unless forloop.first %} aria-hidden="true"{% endunless %}>
+        {%- if forloop.first %}
+        {% include image.html src=slide.src alt=slide.alt width=1000 height=1250 sizes="(min-width: 56rem) 48vw, 100vw" eager=true %}
+        {%- else %}
+        {%- comment %} Slides after the first load only when the carousel needs
+           them; keeping them in a template stops five images racing the LCP. {% endcomment %}
+        <template>{% include image.html src=slide.src alt=slide.alt width=1000 height=1250 sizes="(min-width: 56rem) 48vw, 100vw" %}</template>
+        {%- endif %}
+      </div>
+      {%- endfor %}
+    </div>
+    <div class="hero__overlay">
+      <div class="wrap">
+        <p class="label">Mukena travel</p>
+        <h1 class="display hero__title">Mukena yang rapi, untuk dibawa ke mana saja.</h1>
+        <p class="lead hero__lead">Khimar dan rok dalam satu warna, dilipat ke dalam tas serut kain. Enam warna dengan potongan yang sama.</p>
+        <div class="hero__cta">
+          <a class="btn" href="{{ '/produk/' | relative_url }}">Lihat mukena</a>
+          <a class="btn btn--ghost" href="{{ '/kontak/' | relative_url }}">Tanya via WhatsApp</a>
+        </div>
       </div>
     </div>
-    <figure class="hero__media">
-      {% include image.html src="/assets/img/hero.svg" alt="Susunan kain netral dalam cahaya lembut" width=1600 height=1200 sizes="(min-width: 56rem) 48vw, 100vw" eager=true %}
-    </figure>
+  </div>
+  <div class="wrap hero__dots-wrap">
+    <div class="hero__dots" data-hero-dots hidden></div>
   </div>
 </section>
 
+{%- if site.data.categories.size > 1 %}
 <section class="cats" aria-label="Kategori">
   <div class="wrap cats__inner">
     <p class="label">Kategori</p>
@@ -37,15 +68,16 @@ hero_image: /assets/img/hero.svg
     </ul>
   </div>
 </section>
+{%- endif %}
 
 <section class="section">
   <div class="wrap">
     <div class="section-head">
       <div>
         <p class="label">Pilihan</p>
-        <h2>Beberapa yang sering dipakai</h2>
+        <h2>Empat dari enam warna</h2>
       </div>
-      <a class="link-arrow" href="{{ '/produk/' | relative_url }}">Semua produk <span aria-hidden="true">→</span></a>
+      <a class="link-arrow" href="{{ '/produk/' | relative_url }}">Semua mukena <span aria-hidden="true">→</span></a>
     </div>
 
     <ul class="product-grid">

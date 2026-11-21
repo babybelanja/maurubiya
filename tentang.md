@@ -1,23 +1,21 @@
 ---
 layout: page
 title: Tentang
-description: "Maurubiya membuat pakaian sehari dengan potongan rapi dan bahan yang nyaman, untuk dipakai berulang dalam jangka panjang."
+description: "Maurubiya menampilkan mukena travel seri Zeya dalam enam warna dengan satu potongan yang sama: khimar, rok panjang, dan tas serut kain."
 kicker: Tentang
-lead: "Kami membuat sedikit model, lalu menyempurnakannya."
+lead: "Satu potongan, enam warna."
 ---
 
-Maurubiya lahir dari kebiasaan sederhana: memakai pakaian yang sama berulang kali karena potongannya nyaman dan warnanya mudah dipadukan.
+Katalog ini berisi satu seri: mukena travel Zeya. Khimar dan rok panjang dipakai sebagai dua bagian, lalu dilipat kembali ke dalam tas serut kain yang disertakan.
 
-Kami tidak mengejar banyak model. Setiap potongan diuji untuk duduk dengan rapi di badan, tidak menerawang, dan tetap nyaman setelah dicuci berkali-kali.
+Semua warna memakai potongan yang sama, jadi yang berbeda hanya warnanya. Foto di setiap halaman produk berasal dari seri yang sama, bukan contoh dari produk lain.
 
-Bahan dipilih dengan mempertimbangkan cuaca sehari-hari di Indonesia. Jahitan dirapikan sampai ke sisi dalam. Warna dibuat netral agar tidak sulit dipadukan.
+## Yang bisa dilihat di katalog
 
-## Cara kami bekerja
-
-- **Sedikit model.** Fokus pada bentuk yang benar-benar dipakai.
-- **Bahan yang jujur.** Nyaman di kulit, tidak mengkilap, dan tidak menerawang.
-- **Warna netral.** Gading, pasir, sage, dan arang yang bertemu dengan isi lemari.
+- **Enam warna.** Navy, biru, coklat tua, teracota, marun, dan hitam.
+- **Dua bagian.** Khimar dan rok, dipakai terpisah.
+- **Tas serut kain.** Ikut disertakan untuk menyimpan mukena.
 
 ## Kontak
 
-Pertanyaan tentang ukuran, warna, atau perawatan bisa disampaikan melalui [halaman kontak]({{ '/kontak/' | relative_url }}).
+Pertanyaan tentang ukuran, warna, atau ketersediaan bisa disampaikan melalui [halaman kontak]({{ '/kontak/' | relative_url }}).
