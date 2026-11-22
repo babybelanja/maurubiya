@@ -1,8 +1,8 @@
 # Site
-title: Maurubiya
+title: Rubiya
 tagline: Mukena travel dalam enam warna
 description: >-
-  Maurubiya menampilkan mukena travel seri Zeya: khimar dan rok panjang dalam
+  Rubiya menampilkan mukena travel seri Zeya: khimar dan rok panjang dalam
   enam warna, dilengkapi tas serut kain untuk dibawa dalam perjalanan.
 url: "https://maurubiya.id"
 baseurl: ""
@@ -32,7 +32,7 @@ defaults:
         type: "ItemPage"
       image:
         path: /assets/img/og-image.jpg
-        alt: "Maurubiya — pakaian sehari yang rapi"
+        alt: "Rubiya — mukena travel dalam enam warna"
         width: 1200
         height: 630
   - scope:
@@ -42,7 +42,7 @@ defaults:
       layout: "page"
       image:
         path: /assets/img/og-image.jpg
-        alt: "Maurubiya — pakaian sehari yang rapi"
+        alt: "Rubiya — mukena travel dalam enam warna"
         width: 1200
         height: 630
 

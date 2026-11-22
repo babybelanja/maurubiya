@@ -1,4 +1,4 @@
-brand: Maurubiya
+brand: Rubiya
 tagline: Mukena travel dalam enam warna
 
 nav:
@@ -25,7 +25,7 @@ analytics:
   # Isi dengan ID GA4 (G-XXXXXXXXXX) saat siap.
   ga_id: ""
 
-# Isi bagian ini hanya bila Maurubiya berada di bawah PT Babybelanja
+# Isi bagian ini hanya bila Rubiya berada di bawah PT Babybelanja
 # Berkah Bersama. Bila kosong, footer dan JSON-LD tidak menampilkannya.
 umbrella:
   name: ""

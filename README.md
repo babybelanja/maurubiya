@@ -1,6 +1,6 @@
-# Maurubiya — Showcase
+# Rubiya (maurubiya.id) — Showcase
 
-Katalog *showcase* untuk merek **Maurubiya** di `maurubiya.id`. Register
+Katalog *showcase* untuk merek **Rubiya**, disajikan di `maurubiya.id`. Register
 **clean catalog** (acuan HAY): latar gading hangat, satu sans, aturan garis
 tipis, dan tombol terakota. Tanpa keranjang dan tanpa harga — transaksi
 dialihkan ke WhatsApp.

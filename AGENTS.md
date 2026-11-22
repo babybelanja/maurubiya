@@ -1,4 +1,4 @@
-# Agent Rules — Maurubiya
+# Agent Rules — Rubiya (maurubiya.id)
 
 These rules are binding for every change in this repository. If a change cannot
 meet them, say so before making it.

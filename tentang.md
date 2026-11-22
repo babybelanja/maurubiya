@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tentang
-description: "Maurubiya menampilkan mukena travel seri Zeya dalam enam warna dengan satu potongan yang sama: khimar, rok panjang, dan tas serut kain."
+description: "Rubiya menampilkan mukena travel seri Zeya dalam enam warna dengan satu potongan yang sama: khimar, rok panjang, dan tas serut kain."
 kicker: Tentang
 lead: "Satu potongan, enam warna."
 ---

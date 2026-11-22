@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Kontak
-description: "Hubungi Maurubiya melalui WhatsApp atau surel untuk pertanyaan tentang ukuran, warna, bahan, dan ketersediaan produk. Kami membantu memilih."
+description: "Hubungi Rubiya melalui WhatsApp atau surel untuk pertanyaan tentang ukuran, warna, bahan, dan ketersediaan produk. Kami membantu memilih."
 ---
 
 <section class="page">
