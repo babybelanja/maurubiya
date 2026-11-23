@@ -134,6 +134,15 @@ Build produksi, Chrome headless, 20 November 2026:
 \* 404 sengaja `noindex`, sehingga audit "page is crawlable" gagal.
 Metrik mobile: LCP 0,8 dtk · CLS 0 · TBT 0 ms.
 
+Dengan Google Tag Manager aktif: **98 / 100 / 100 / 100** (LCP 2,4 dtk,
+CLS 0, TBT 10 ms).
+
+## Analytics
+
+Google Tag Manager `GTM-KSMNPFJM`, diatur di `_data/site.yml` (`analytics.gtm_id`).
+Snippet hanya dimuat saat `JEKYLL_ENV=production`. GA4 dikonfigurasi sebagai tag
+di dalam container GTM — bukan di repo ini.
+
 ## Catatan
 
 - `opencode.json` bersifat lokal dan tidak diikutkan (`.gitignore`).

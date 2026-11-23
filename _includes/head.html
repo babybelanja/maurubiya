@@ -91,4 +91,6 @@
   {%- assign _hs = _hf | split: '.' | first | replace: '-640', '' | replace: '-1280', '' | replace: '-1600', '' -%}
   <link rel="preload" as="image" type="image/avif" imagesrcset="{{ _hd }}{{ _hs }}-640.avif 640w, {{ _hd }}{{ _hs }}-1280.avif 1280w, {{ _hd }}{{ _hs }}-1600.avif 1600w" imagesizes="(min-width: 56rem) 48vw, 100vw" fetchpriority="high" />
   {%- endif %}
+
+  {% include analytics.html %}
 </head>

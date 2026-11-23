@@ -22,7 +22,10 @@ social:
   tiktok: ""
 
 analytics:
-  # Isi dengan ID GA4 (G-XXXXXXXXXX) saat siap.
+  # Google Tag Manager container. GA4 dikonfigurasi di dalam GTM,
+  # bukan di sini. Hanya dimuat saat JEKYLL_ENV=production.
+  gtm_id: "GTM-KSMNPFJM"
+  # Fallback langsung ke GA4 bila suatu saat tidak memakai GTM.
   ga_id: ""
 
 # Isi bagian ini hanya bila Rubiya berada di bawah PT Babybelanja

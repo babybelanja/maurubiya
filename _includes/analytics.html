@@ -1,5 +1,22 @@
+{%- assign gtm = site.data.site.analytics.gtm_id -%}
 {%- assign ga = site.data.site.analytics.ga_id -%}
-{%- if ga and ga != "" and jekyll.environment == "production" %}
+{%- if jekyll.environment == "production" %}
+{%- if gtm and gtm != "" %}
+{% comment %} Google Tag Manager — head snippet {% endcomment %}
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', '{{ gtm }}');
+</script>
+{%- elsif ga and ga != "" %}
+{% comment %} Google Analytics 4 (gtag.js) — fallback when no GTM container {% endcomment %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -7,4 +24,5 @@
   gtag('js', new Date());
   gtag('config', '{{ ga }}');
 </script>
+{%- endif %}
 {%- endif %}

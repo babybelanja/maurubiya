@@ -1,11 +1,8 @@
 name: Build and deploy to GitHub Pages
 
 on:
-  # Push deploys stay off until Pages is enabled and maurubiya.id resolves.
-  # Restore the trigger below once the domain is live, otherwise every push
-  # fails at actions/configure-pages and the site has nowhere to publish.
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
