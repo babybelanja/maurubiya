@@ -6,6 +6,8 @@ nav:
     url: /
   - label: Produk
     url: /produk/
+  - label: Reseller
+    url: /reseller/
   - label: Tentang
     url: /tentang/
   - label: Kontak

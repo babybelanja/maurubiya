@@ -16,9 +16,10 @@ dialihkan ke WhatsApp.
 _config.yml               # koleksi produk, permalink, plugin, sass
 _data/site.yml            # navigasi, kontak, sosial, analytics, umbrella
 _data/categories.yml      # kategori produk
+_data/resellers.yml       # direktori agen (116 agen / 59 kota)
 _products/*.md            # satu berkas per produk → /produk/<slug>/
 _includes/                # head, header, footer, image, product-card, email
-_layouts/default.html     # shell halaman + JS kecil (nav, filter, reveal)
+_layouts/default.html     # shell halaman + JS kecil (nav, filter katalog/reseller)
 _layouts/page.html        # halaman teks (Tentang)
 _layouts/product.html     # detail produk + JSON-LD Product
 _sass/                    # tokens, base, type, components
@@ -27,6 +28,7 @@ assets/fonts/             # Plus Jakarta Sans (woff2)
 assets/img/               # hero mukena, logo, og-image, turunan produk
 index.html                # beranda
 produk/index.html         # katalog + filter kategori
+reseller.html             # /reseller/ — direktori agen + filter kota/nama
 tentang.md                # /tentang/
 kontak.md                 # /kontak/
 404.html

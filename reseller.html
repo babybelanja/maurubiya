@@ -1,0 +1,48 @@
+---
+layout: default
+title: Agen & Reseller
+description: "Temukan agen dan reseller Rubiya di berbagai kota, lalu sapa mereka langsung melalui WhatsApp untuk bertanya atau memesan mukena."
+permalink: /reseller/
+wa_text: "Assalamu'alaikum, saya mau tanya produk Rubiya."
+---
+
+{%- assign groups = site.data.resellers | group_by: "city" | sort: "name" -%}
+
+<section class="page">
+  <div class="wrap">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="{{ '/' | relative_url }}">Beranda</a></li>
+        <li aria-current="page">Agen &amp; Reseller</li>
+      </ol>
+    </nav>
+
+    <header class="page-head page-head--flush">
+      <p class="label">Agen &amp; Reseller</p>
+      <h1>Temukan agen terdekat.</h1>
+      <p class="lead">Rubiya hadir melalui agen di berbagai kota. Sapa mereka langsung melalui WhatsApp untuk bertanya atau memesan.</p>
+    </header>
+
+    <label class="reseller-search">
+      <span class="label">Cari</span>
+      <input id="resellerFilter" type="search" placeholder="Kota atau nama agen…" autocomplete="off" />
+    </label>
+
+    <div class="reseller-grid" id="resellerGrid">
+      {%- for group in groups %}
+      <section class="reseller-group">
+        <h2 class="label reseller-group__city">{{ group.name }}</h2>
+        <ul class="reseller-list">
+          {%- for agent in group.items %}
+          <li class="reseller-item">
+            <a href="https://wa.me/{{ agent.wa }}?text={{ page.wa_text | url_encode }}" target="_blank" rel="noopener">{{ agent.name }}</a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </section>
+      {%- endfor %}
+    </div>
+
+    <p class="reseller-empty muted" id="resellerEmpty" role="status" hidden>Tidak ada agen ditemukan.</p>
+  </div>
+</section>

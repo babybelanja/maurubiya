@@ -162,6 +162,27 @@
           if (match) { match.click(); }
         }
       }
+
+      var resellerFilter = document.getElementById('resellerFilter');
+      if (resellerFilter) {
+        var resellerGroups = Array.prototype.slice.call(document.querySelectorAll('.reseller-group'));
+        var resellerEmpty = document.getElementById('resellerEmpty');
+        resellerFilter.addEventListener('input', function () {
+          var query = resellerFilter.value.trim().toLowerCase();
+          var any = false;
+          resellerGroups.forEach(function (group) {
+            var visible = 0;
+            group.querySelectorAll('.reseller-item').forEach(function (item) {
+              var show = item.textContent.toLowerCase().indexOf(query) !== -1;
+              item.hidden = !show;
+              if (show) { visible++; }
+            });
+            group.hidden = visible === 0;
+            if (visible) { any = true; }
+          });
+          if (resellerEmpty) { resellerEmpty.hidden = any; }
+        });
+      }
     })();
   </script>
 </body>
