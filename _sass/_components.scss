@@ -746,3 +746,83 @@ a.contact-card:hover { background: var(--bg-soft); }
 .reseller-item a:hover { color: var(--accent); }
 
 .reseller-empty { margin-top: 2rem; }
+
+.reseller-hint {
+  margin: -1rem 0 2rem;
+  font-size: 0.82rem;
+}
+@media (max-width: 55.99rem) {
+  .reseller-hint { display: none; }
+}
+
+// ── QR modal (desktop agent click) ───────────────────────────
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.qr-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 28, 28, 0.55);
+}
+
+.qr-modal__dialog {
+  position: relative;
+  width: min(24rem, 100%);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: $radius;
+}
+
+.qr-modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.qr-modal__dialog h2 {
+  margin: 0.25rem 0 1rem;
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+}
+
+.qr-modal__image {
+  width: 240px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1rem;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+}
+
+.qr-modal__hint {
+  margin: 0 0 1.25rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.qr-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  .btn { width: 100%; }
+}
+
+body.is-locked { overflow: hidden; }

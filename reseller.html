@@ -3,7 +3,7 @@ layout: default
 title: Agen & Reseller
 description: "Temukan agen dan reseller Rubiya di berbagai kota, lalu sapa mereka langsung melalui WhatsApp untuk bertanya atau memesan mukena."
 permalink: /reseller/
-wa_text: "Assalamu'alaikum, saya mau tanya produk Rubiya."
+wa_text: "Assalamu%27alaikum%2C%20saya%20mau%20tanya%20produk%20Rubiya."
 ---
 
 {%- assign groups = site.data.resellers | group_by: "city" | sort: "name" -%}
@@ -28,6 +28,8 @@ wa_text: "Assalamu'alaikum, saya mau tanya produk Rubiya."
       <input id="resellerFilter" type="search" placeholder="Kota atau nama agen…" autocomplete="off" />
     </label>
 
+    <p class="reseller-hint muted">Di desktop, klik nama agen untuk menampilkan kode QR WhatsApp.</p>
+
     <div class="reseller-grid" id="resellerGrid">
       {%- for group in groups %}
       <section class="reseller-group">
@@ -35,7 +37,9 @@ wa_text: "Assalamu'alaikum, saya mau tanya produk Rubiya."
         <ul class="reseller-list">
           {%- for agent in group.items %}
           <li class="reseller-item">
-            <a href="https://wa.me/{{ agent.wa }}?text={{ page.wa_text | url_encode }}" target="_blank" rel="noopener">{{ agent.name }}</a>
+            <a href="https://wa.me/{{ agent.wa }}?text={{ page.wa_text }}"
+               data-qr="{{ '/assets/qr/' | append: agent.wa | append: '.svg' | relative_url }}"
+               target="_blank" rel="noopener">{{ agent.name }}</a>
           </li>
           {%- endfor %}
         </ul>
@@ -46,3 +50,18 @@ wa_text: "Assalamu'alaikum, saya mau tanya produk Rubiya."
     <p class="reseller-empty muted" id="resellerEmpty" role="status" hidden>Tidak ada agen ditemukan.</p>
   </div>
 </section>
+
+<div class="qr-modal" id="qrModal" hidden>
+  <div class="qr-modal__backdrop" data-close></div>
+  <div class="qr-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="qrTitle" aria-describedby="qrHint">
+    <button class="qr-modal__close" type="button" aria-label="Tutup" data-close>&times;</button>
+    <p class="label">Agen Rubiya</p>
+    <h2 id="qrTitle"></h2>
+    <img class="qr-modal__image" id="qrImage" alt="" width="240" height="240" />
+    <p class="qr-modal__hint" id="qrHint">Pindai dengan kamera ponsel untuk membuka WhatsApp.</p>
+    <div class="qr-modal__actions">
+      <a class="btn" id="qrOpen" href="#" target="_blank" rel="noopener">Buka WhatsApp</a>
+      <button class="btn btn--ghost" id="qrCopy" type="button">Salin tautan</button>
+    </div>
+  </div>
+</div>

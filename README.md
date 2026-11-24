@@ -26,6 +26,7 @@ _sass/                    # tokens, base, type, components
 assets/css/main.scss      # @use seluruh partial
 assets/fonts/             # Plus Jakarta Sans (woff2)
 assets/img/               # hero mukena, logo, og-image, turunan produk
+assets/qr/                # kode QR WhatsApp statis per agen
 index.html                # beranda
 produk/index.html         # katalog + filter kategori
 reseller.html             # /reseller/ — direktori agen + filter kota/nama
@@ -33,6 +34,7 @@ tentang.md                # /tentang/
 kontak.md                 # /kontak/
 404.html
 bin/images                # pipeline master → WebP/AVIF 640/1280/1600
+bin/qr                    # generate ulang assets/qr/ dari _data/resellers.yml
 AGENTS.md                 # aturan SEO + Lighthouse
 ```
 
@@ -138,6 +140,14 @@ Metrik mobile: LCP 0,8 dtk · CLS 0 · TBT 0 ms.
 
 Dengan Google Tag Manager aktif: **98 / 100 / 100 / 100** (LCP 2,4 dtk,
 CLS 0, TBT 10 ms).
+
+## Reseller
+
+`/reseller/` mengelompokkan 116 agen per kota (59 kota) dan bisa disaring
+berdasarkan kota atau nama. Di desktop (≥ 56rem), klik nama agen membuka modal
+berisi kode QR yang mengarah ke `wa.me` dengan pesan yang sudah terisi; di
+ponsel, tautan langsung membuka WhatsApp. Kode QR dihasilkan statis oleh
+`bin/qr` ke `assets/qr/`, jadi tidak ada permintaan ke layanan QR pihak ketiga.
 
 ## Analytics
 

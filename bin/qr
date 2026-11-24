@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Generate one static QR SVG per reseller WhatsApp number.
+# Encodes the same wa.me URL used by /reseller/ (with the prefilled message).
+# Requires Node/npm on first run; output is committed to assets/qr/.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+mkdir -p assets/qr
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+(cd "$TMP" && npm init -y >/dev/null 2>&1 && npm install --silent qrcode@1 >/dev/null 2>&1)
+
+NODE_PATH="$TMP/node_modules" node - <<'JS'
+const fs = require('fs');
+const QR = require('qrcode');
+
+const text = "Assalamu%27alaikum%2C%20saya%20mau%20tanya%20produk%20Rubiya.";
+const yaml = fs.readFileSync('_data/resellers.yml', 'utf8');
+const numbers = [...new Set(
+  yaml.split('\n')
+    .filter((line) => line.trim().startsWith('wa:'))
+    .map((line) => (line.match(/"(\d+)"/) || [])[1])
+    .filter(Boolean)
+)];
+
+const options = {
+  type: 'svg',
+  width: 240,
+  margin: 2,
+  color: { dark: '#1c1c1c', light: '#f6f4ef' },
+};
+
+Promise.all(numbers.map(async (wa) => {
+  const url = `https://wa.me/${wa}?text=${text}`;
+  const svg = await QR.toString(url, options);
+  fs.writeFileSync(`assets/qr/${wa}.svg`, svg);
+})).then(() => {
+  console.log(`Wrote ${numbers.length} QR codes to assets/qr/`);
+});
+JS
